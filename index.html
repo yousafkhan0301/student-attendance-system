@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Attendance System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="hero-header" id="mainHeader">
+  <img src="logo.png" class="hero-logo" alt="Logo">
+  <div class="hero-text">
+    <h1>Student Attendance System</h1>
+    <h2>University of Swabi</h2>
+  </div>
+</header>
+
+<div class="container" id="mainContent">
+
+  <div class="form">
+    <button class="pro-btn primary" onclick="selectStudentFile()">📂 Load Students</button>
+    <input type="date" id="attendanceDate">
+    <button class="pro-btn info" onclick="saveTodayAttendance()">Save Attendance</button>
+    <button class="pro-btn success" onclick="downloadMonthlyReport()">Download Monthly Report</button>
+  </div>
+
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search student..." onkeyup="searchStudent()">
+  </div>
+
+  <div id="summary"></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Attendance</th>
+      </tr>
+    </thead>
+    <tbody id="table"></tbody>
+  </table>
+
+</div>
+
+<div id="messageBox">
+  <div class="message-content">
+    <p id="messageText"></p>
+    <button onclick="closeMessage()">OK</button>
+  </div>
+</div>
+
+<input type="file" id="fileInput" accept=".txt,.md" hidden>
+
+<footer class="app-footer">
+  © 2025 | Made by The Team of Mudassir Khan
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
