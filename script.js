@@ -16,12 +16,11 @@ function closeMessage() {
 
 /* LOAD STUDENTS */
 function selectStudentFile() {
-  // GitHub raw URL of students.txt
-  const url = "https://raw.githubusercontent.com/yousafkhan0301/student-attendance-system/bfdfd50f2c039dda46d7262127e9f746a69f926a/students.md";
+  const url = "https://yousafkhan0301.github.io/student-attendance-system/students.md";
 
   fetch(url)
     .then(response => {
-      if (!response.ok) throw new Error("Unable to fetch student file");
+      if (!response.ok) throw new Error("Unable to fetch students file");
       return response.text();
     })
     .then(data => {
@@ -102,4 +101,5 @@ window.addEventListener("scroll", () => {
   if (window.scrollY > 50) mainHeader.classList.add("scrolled");
   else mainHeader.classList.remove("scrolled");
 });
+
 
