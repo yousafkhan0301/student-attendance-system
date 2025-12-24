@@ -125,6 +125,7 @@ function downloadMonthlyReport() {
 
   let found = false;
 
+  // Loop through saved attendance
   Object.keys(attendanceData).forEach(d => {
     if (d.startsWith(month)) {
       found = true;
@@ -136,6 +137,17 @@ function downloadMonthlyReport() {
       content += `</table><br>`;
     }
   });
+
+  // If no saved data, use current students array
+  if (!found && students.length > 0) {
+    found = true;
+    content += `<h3>Date: ${date}</h3>`;
+    content += `<table><tr><th>#</th><th>Student Name</th><th>Status</th></tr>`;
+    students.forEach((s, i) => {
+      content += `<tr><td>${i + 1}</td><td>${s.name}</td><td>${s.status || "-"}</td></tr>`;
+    });
+    content += `</table><br>`;
+  }
 
   if (!found) return showMessage("No attendance found for this month");
 
@@ -152,6 +164,6 @@ function downloadMonthlyReport() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+
+  showMessage("Monthly report downloaded successfully");
 }
-
-
