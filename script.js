@@ -102,4 +102,56 @@ window.addEventListener("scroll", () => {
   else mainHeader.classList.remove("scrolled");
 });
 
+function downloadMonthlyReport() {
+  const date = document.getElementById("attendanceDate").value;
+  if (!date) return showMessage("Please select any date of the month");
+
+  const month = date.slice(0, 7); // YYYY-MM
+  let content = `
+    <html>
+      <head>
+        <title>Monthly Attendance Report</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 20px; }
+          h2 { text-align: center; }
+          table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+          th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+          th { background: #f0f0f0; }
+        </style>
+      </head>
+      <body>
+        <h2>Monthly Attendance Report - ${month}</h2>
+  `;
+
+  let found = false;
+
+  Object.keys(attendanceData).forEach(d => {
+    if (d.startsWith(month)) {
+      found = true;
+      content += `<h3>Date: ${d}</h3>`;
+      content += `<table><tr><th>#</th><th>Student Name</th><th>Status</th></tr>`;
+      attendanceData[d].forEach((s, i) => {
+        content += `<tr><td>${i + 1}</td><td>${s.name}</td><td>${s.status || "-"}</td></tr>`;
+      });
+      content += `</table><br>`;
+    }
+  });
+
+  if (!found) return showMessage("No attendance found for this month");
+
+  content += `</body></html>`;
+
+  // Create a Blob and download
+  const blob = new Blob([content], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `Attendance_Report_${month}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 
