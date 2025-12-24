@@ -16,11 +16,16 @@ function closeMessage() {
 
 /* LOAD STUDENTS */
 function selectStudentFile() {
-  fileInput.click();
-  fileInput.onchange = () => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      students = e.target.result
+  // GitHub raw URL of students.txt
+  const url = "https://raw.githubusercontent.com/yousafkhan0301/student-attendance-system/bfdfd50f2c039dda46d7262127e9f746a69f926a/students.md";
+
+  fetch(url)
+    .then(response => {
+      if (!response.ok) throw new Error("Unable to fetch student file");
+      return response.text();
+    })
+    .then(data => {
+      students = data
         .split("\n")
         .map(n => n.trim())
         .filter(n => n)
@@ -29,10 +34,12 @@ function selectStudentFile() {
       filteredStudents = students;
       render();
       showMessage("Students loaded successfully");
-    };
-    reader.readAsText(fileInput.files[0]);
-  };
+    })
+    .catch(err => {
+      showMessage("Error loading students: " + err.message);
+    });
 }
+
 
 /* RENDER */
 function render() {
@@ -95,3 +102,4 @@ window.addEventListener("scroll", () => {
   if (window.scrollY > 50) mainHeader.classList.add("scrolled");
   else mainHeader.classList.remove("scrolled");
 });
+
