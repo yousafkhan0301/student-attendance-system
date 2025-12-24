@@ -178,11 +178,14 @@ th {
 }
 
 .app-footer {
+  position: sticky;
+  bottom: 15px;
+  z-index: 90;
   text-align: center;
   margin-top: 25px;
   padding: 10px 0;
   font-size: 15px;
-  color: black;
+  color: white;
 }
 
 /* ================= STICKY TOOLBAR (Buttons + Search + Summary) ================= */
@@ -219,4 +222,5 @@ thead th {
   background: #f0f0f0;
   z-index: 870;
 }
+
 
